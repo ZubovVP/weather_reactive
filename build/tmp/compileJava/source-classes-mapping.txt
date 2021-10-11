@@ -1,0 +1,18 @@
+ru/job4j/contoller/WeatherControl.java
+ ru.job4j.contoller.WeatherControl
+ru/job4j/weather/Store.java
+ ru.job4j.weather.Store
+ru/job4j/model/City.java
+ ru.job4j.model.City
+ru/job4j/repository/CityRepository.java
+ ru.job4j.repository.CityRepository
+ru/job4j/service/CityService.java
+ ru.job4j.service.CityService
+ru/job4j/Main.java
+ ru.job4j.Main
+ru/job4j/model/Weather.java
+ ru.job4j.model.Weather
+ru/job4j/weather/Observe.java
+ ru.job4j.weather.Observe
+ru/job4j/service/WeatherService.java
+ ru.job4j.service.WeatherService
