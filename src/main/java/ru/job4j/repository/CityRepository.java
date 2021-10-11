@@ -1,6 +1,6 @@
 package ru.job4j.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import ru.job4j.model.City;
 
 /**
@@ -10,5 +10,5 @@ import ru.job4j.model.City;
  * Version: $.
  * Date: 09.10.2021.
  */
-public interface CityRepository extends CrudRepository<City, Integer> {
+public interface CityRepository extends ReactiveCrudRepository<City, Integer> {
 }

@@ -3,14 +3,9 @@ package ru.job4j.service;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import ru.job4j.model.City;
 import ru.job4j.model.Weather;
 import ru.job4j.parser.WeatherParser;
-
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Intellij IDEA.
@@ -21,32 +16,28 @@ import java.util.stream.Collectors;
  */
 @Service
 public class WeatherService {
-    private final WeatherParser weatherParser = new WeatherParser();
+    private final WeatherParser weatherParser;
     private final CityService cityService;
 
-    public WeatherService(CityService cityService) {
+    public WeatherService(WeatherParser weatherParser, CityService cityService) {
+        this.weatherParser = weatherParser;
         this.cityService = cityService;
     }
 
     public Mono<Weather> findById(Integer id) {
-        return Mono.justOrEmpty(this.weatherParser.parse(List.of(this.cityService.findById(id))).get(0));
+        return this.cityService.findById(id).flatMap(this.weatherParser::parse);
     }
 
     public Flux<Weather> all() {
-        List<City> cities = new ArrayList<>();
-        this.cityService.getAll().forEach(cities::add);
-        return Flux.fromIterable(this.weatherParser.parse(cities));
+        return this.cityService.getAll().flatMap(this.weatherParser::parse);
     }
 
     public Mono<Weather> getHottest() {
-        List<City> cities = new ArrayList<>();
-        this.cityService.getAll().forEach(cities::add);
-        return Mono.justOrEmpty(this.weatherParser.parse(cities).stream().max(Comparator.comparing(Weather::getTemperature)));
+        return Mono.justOrEmpty(this.cityService.getAll().flatMap(this.weatherParser::parse).toStream().max(Comparator.comparing(Weather::getTemperature)));
+
     }
 
     public Flux<Weather> getCityGreatThen(Integer amount) {
-        List<City> cities = new ArrayList<>();
-        this.cityService.getAll().forEach(cities::add);
-        return Flux.fromIterable(this.weatherParser.parse(cities).stream().filter(e -> e.getTemperature() > amount).collect(Collectors.toList()));
+        return this.cityService.getAll().flatMap(this.weatherParser::parse).filter(e -> e.getTemperature() > amount);
     }
 }

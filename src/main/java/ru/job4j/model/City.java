@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
-import javax.persistence.Id;
+
 /**
  * Created by Intellij IDEA.
  * User: Vitaly Zubov.
@@ -18,12 +18,9 @@ import javax.persistence.Id;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "city")
 public class City {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
 }

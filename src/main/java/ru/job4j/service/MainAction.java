@@ -1,5 +1,8 @@
 package ru.job4j.service;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 /**
  * Created by Intellij IDEA.
  * User: Vitaly Zubov.
@@ -8,9 +11,9 @@ package ru.job4j.service;
  * Date: 11.10.2021.
  */
 public interface MainAction<E> {
-    E add(E element);
+    Mono<E> add(E element);
 
-    Iterable<E> getAll();
+    Flux<E> getAll();
 
-    E findById(Integer id);
+    Mono<E> findById(Integer id);
 }

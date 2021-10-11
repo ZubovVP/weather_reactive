@@ -2,6 +2,8 @@ package ru.job4j.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import ru.job4j.model.City;
 import ru.job4j.repository.CityRepository;
 
@@ -18,17 +20,17 @@ public class CityService implements MainAction<City> {
     private CityRepository repository;
 
     @Override
-    public City add(City element) {
+    public Mono<City> add(City element) {
         return this.repository.save(element);
     }
 
     @Override
-    public Iterable<City> getAll() {
+    public Flux<City> getAll() {
         return repository.findAll();
     }
 
     @Override
-    public City findById(Integer id) {
-        return repository.findById(id).orElse(null);
+    public Mono<City> findById(Integer id) {
+        return repository.findById(id);
     }
 }
